@@ -29,7 +29,8 @@ var swig = require("./swig");
 var applyDefaults = function(ctx) {
   return extend({}, def, ctx, {
     groups: extend(def.groups, ctx.groups),
-    display: extend(def.display, ctx.display)
+    display: extend(def.display, ctx.display),
+    md: extend(def.md, ctx.md)
   });
 };
 
@@ -43,20 +44,20 @@ var applyDefaults = function(ctx) {
  */
 
 var buildDocs = function(template, ctx, dest) {
-  for(var group in ctx.data.byGroupAndType) {
+  for (var group in ctx.data.byGroupAndType) {
     // Set current group name.
     ctx.data.currentGroupName = ctx.groups[group];
     // Set current group.
     ctx.data.currentGroup = ctx.data.byGroupAndType[group];
 
-    const filePath = path.resolve(dest, group + '.html.md');
+    const filePath = path.resolve(dest, group + ctx.md.extension);
     ensureDirectoryExistence(filePath);
 
     // Write file to destination.
     fs.writeFile(
       filePath,
       swig.renderFile(template, ctx),
-      { flag: 'w' },
+      { flag: "w" },
       function(err) {
         if (err) {
           console.log("Error", err);
@@ -65,7 +66,7 @@ var buildDocs = function(template, ctx, dest) {
     );
   }
   return true;
-}
+};
 
 function ensureDirectoryExistence(filePath) {
   var dirname = path.dirname(filePath);
@@ -75,7 +76,6 @@ function ensureDirectoryExistence(filePath) {
   ensureDirectoryExistence(dirname);
   fs.mkdirSync(dirname);
 }
-
 
 /**
  * Copy pages to destination.
@@ -94,7 +94,7 @@ var buildPages = function(ctx, dest) {
   } else {
     return false;
   }
-}
+};
 
 /**
  * Export.
@@ -104,9 +104,12 @@ var buildPages = function(ctx, dest) {
  * @returns {*}
  */
 
-module.exports = function (dest, ctx) {
+module.exports = function(dest, ctx) {
   // Resolve entry template.
-  var groupTemplate = path.resolve(__dirname, "../templates/group.markdown.swig");
+  var groupTemplate = path.resolve(
+    __dirname,
+    "../templates/group.markdown.swig"
+  );
 
   // Extend defaults.
   ctx = applyDefaults(ctx);
@@ -118,6 +121,8 @@ module.exports = function (dest, ctx) {
   ctx.data.byGroupAndType = sassdocExtras.byGroupAndType(ctx.data);
 
   // Construct.
-  return Promise.all([buildDocs(groupTemplate, ctx, dest), buildPages(ctx, dest)]);
-
+  return Promise.all([
+    buildDocs(groupTemplate, ctx, dest),
+    buildPages(ctx, dest)
+  ]);
 };
