@@ -8,7 +8,7 @@
 {% endif %}
 ```scss
 {% filter parse_code %}
-{{ example.code|escape|safe }}
+{{ example.code|safe }}
 {% endfilter %}
 ```
 {% endfor %}

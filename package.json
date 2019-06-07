@@ -1,6 +1,6 @@
 {
   "name": "sassdoc-theme-md",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A markdown theme for SassDoc.",
   "directories": {
     "test": "test"
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dfmcphee/sassdoc-theme-md.git"
+    "url": "git+https://github.com/TheScienceMuseum/sassdoc-theme-md.git"
   },
   "main": "dist",
   "files": [
@@ -30,9 +30,9 @@
   "author": "Dominic McPhee <dominic.mcphee@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dfmcphee/sassdoc-theme-md/issues"
+    "url": "https://github.com/TheScienceMuseum/sassdoc-theme-md/issues"
   },
-  "homepage": "https://github.com/dfmcphee/sassdoc-theme-md#readme",
+  "homepage": "https://github.com/TheScienceMuseum/sassdoc-theme-md#readme",
   "dependencies": {
     "es6-denodeify": "^0.1.5",
     "es6-promise": "^3.1.2",

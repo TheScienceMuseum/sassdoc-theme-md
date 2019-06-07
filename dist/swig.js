@@ -135,6 +135,7 @@ var outputParameters = function(parameters) {
     parts.forEach(function(part){
       var output = parameter[part] || "";
       output = output.replace("\n", "").trim();
+      output = output.replace("|", ",").trim();
       if (output) {
         row.push(output);
       }
